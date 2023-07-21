@@ -1,0 +1,51 @@
+# Experiment Configuration File
+#
+# Purpose: Perform shortcut detection with variational autoencoders.
+# Date: 2023-05-20
+# Author: Simon Roschman, Shahbaz Khan
+#
+# Description:
+# This file provides partial configuration parameters for training the VAE, evaluating its latent space and evaluating a classifier with frozen VAE backbone.
+# Some of the parameters are provided as command line arguments which overwrite the existing config value. So you don't need to provide their values here.
+# Such parameters have been subgrouped separately with a header comment starting with # Redundant parameters,...
+
+# VAE configuration
+vae:
+  weight_decay: 0
+
+  # Number of epochs for VAE training
+  epochs: 500 
+  
+  # Interval for performing validation (in epochs)
+  val_interval: 5
+  
+  # Number of epochs to wait for early stopping
+  patience: 10 
+
+  # Redundant parameters: following parameters are overwritten by cmd arguments, no need to specify them. 
+  # Their descriptions are provided by the argument parser.
+  type: ResnetVAE 
+  latent_dim: 32 
+  kld_weight: 2 
+  cls_weight: 0 
+  lr: 0.001 
+  batch_size: 32 
+
+# Classifier configuration to evaluate the predictiveness of latent variables
+classifier:
+  lr: 0.001
+  weight_decay: 0.001
+  batch_size: 32
+  epochs: 50
+  patience: 10
+
+# Data configuration
+data:
+  # Path to the root directory of the dataset
+  base_path: "/content/drive/MyDrive/fraunhofer/data"
+
+  # Image input size to the model
+  img_size: 128
+
+# Random seed to make all random operations deterministic and reproduce the results
+seed: 42
